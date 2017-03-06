@@ -1,6 +1,0 @@
-reads: [/home/ubuntu/seq/test/testexome.pair0.tumour.bam, /home/ubuntu/seq/test/testexome.pair0.normal.bam]
-reference:
-  class: File
-  path: /home/ubuntu/seq/ref/Homo_sapiens_assembly19.fasta
-known: [/home/ubuntu/seq/ref/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf, /home/ubuntu/seq/ref/1000G_phase1.indels.hg19.sites.vcf]
-parallel_realign: true

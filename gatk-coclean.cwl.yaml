@@ -3,8 +3,21 @@ label: GATK Co-Cleaning
 cwlVersion: v1.0
 
 inputs:
-  input_bams:
-    type: File[]
+  input_bam:
+    type: File
+    secondaryFiles:
+      - .bai
+
+  knownIndels:
+    type:
+      - "null"
+      - type: array
+        items: File
+
+  knownSites:
+    type:
+      - "null"
+      - File
 
   reference:
     type: File
@@ -23,9 +36,9 @@ steps:
   indel_realign:
     run: ./indel_realign.cwl.yaml
     in:
-      input_bams: input_bams
+      input_bam: input_bam
       reference: reference
-      known: null
+      knownIndels: null
       parallel_realign: true
     out:
       - realigned

@@ -21,14 +21,15 @@ arguments:
     valueFrom: "realigned.bam"
     prefix: -o
     position: 1
-    separate: true
 
 inputs:
-  input_bams:
-    type: File[]
+  input_bam:
+    type: File
     inputBinding:
       prefix: -I
       position: 2
+    secondaryFiles:
+      - .bai
 
   reference:
     type: File
@@ -39,7 +40,7 @@ inputs:
       - .fai
       - ^.dict
 
-  known:
+  knownIndels:
     type: File[]
     inputBinding:
       prefix: --known

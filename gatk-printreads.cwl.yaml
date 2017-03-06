@@ -21,17 +21,14 @@ arguments:
     valueFrom: "PrintReads"
     prefix: -T
     position: 1
-    separate: true
   - 
     valueFrom: 8
     prefix: -nct
     position: 2
-    separate: true
   - 
     valueFrom: "output.bam"
     prefix: -o
     position: 3
-    separate: true
 
 inputs: 
   input_bam:
@@ -39,7 +36,6 @@ inputs:
     inputBinding: 
       prefix: -I
       position: 5
-      separate: true
     secondaryFiles:
       - .bai
 
@@ -48,7 +44,6 @@ inputs:
     inputBinding: 
       prefix: -R
       position: 4
-      separate: true
     secondaryFiles:
       - .fai
       - ^.dict
@@ -58,14 +53,12 @@ inputs:
     inputBinding: 
       prefix: --emit_original_quals
       position: 6
-      separate: true
 
   bqsr:
     type: File
     inputBinding: 
       prefix: -BQSR
       position: 7
-      separate: true
 
 outputs: 
   output:
