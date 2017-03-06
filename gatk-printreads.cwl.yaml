@@ -3,9 +3,8 @@ cwlVersion: v1.0
 label: GATK PrintReads
 
 hints:
-  requirements:
-    - class: ResourceRequirement
-      coresMin: 8
+  - class: ResourceRequirement
+    coresMin: 8
 
 requirements: 
   - class: DockerRequirement
@@ -22,7 +21,7 @@ arguments:
     prefix: -T
     position: 1
   - 
-    valueFrom: 8
+    valueFrom: "8"
     prefix: -nct
     position: 2
   - 

@@ -3,17 +3,16 @@ cwlVersion: v1.0
 label: GATK Indel Realignment
 
 hints:
-  requirements:
-    - class: ResourceRequirement
-      coresMin: 8
-      ramMin: 16
+  - class: ResourceRequirement
+    coresMin: 8
+    ramMin: 16
 
 requirements:
   - class: DockerRequirement
     dockerPull: "opengenomics/gatk-cocleaning:v1.0"
 
 baseCommand: 
-  - "/usr/bin/python3"
+  - "python2.7"
   - "/opt/indel_realign.py"
 
 arguments:
@@ -54,7 +53,10 @@ inputs:
       - ^.dict
 
   knownIndels:
-    type: File[]
+    type: 
+      - "null"
+      - type: array
+        items: File
     inputBinding:
       prefix: --known
       position: 6

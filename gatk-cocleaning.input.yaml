@@ -1,0 +1,13 @@
+tumor_bam: 
+  class: File
+  path: /Users/strucka/Projects/tools-and-workflows/dockstore-cgpwxs/examples/COLO-829_ex.bam
+normal_bam: 
+  class: File
+  path: /Users/strucka/Projects/tools-and-workflows/dockstore-cgpwxs/examples/COLO-829-BL_ex.bam
+reference:
+  class: File
+  path: /Users/strucka/Projects/tools-and-workflows/mc3/workflow_inputs/Homo_sapiens_assembly19.fasta
+knownIndels: null
+knownSites: null
+parallel_realign: true
+emit_oq: false
