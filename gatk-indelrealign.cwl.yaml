@@ -1,0 +1,60 @@
+class: CommandLineTool
+cwlVersion: v1.0
+label: GATK Indel Realignment
+
+hints:
+  requirements:
+    - class: ResourceRequirement
+      coresMin: 8
+      ramMin: 16
+
+requirements:
+  - class: DockerRequirement
+    dockerPull: "opengenomics/gatk-cocleaning:v1.0"
+
+baseCommand: 
+  - "/usr/bin/python3"
+  - "/opt/indel_realign.py"
+
+arguments:
+  - 
+    valueFrom: "realigned.bam"
+    prefix: -o
+    position: 1
+    separate: true
+
+inputs:
+  input_bams:
+    type: File[]
+    inputBinding:
+      prefix: -I
+      position: 2
+
+  reference:
+    type: File
+    inputBinding:
+      prefix: -R
+      position: 3
+    secondaryFiles:
+      - .fai
+      - ^.dict
+
+  known:
+    type: File[]
+    inputBinding:
+      prefix: --known
+      position: 4
+
+  parallel_realign:
+    type: ["null", boolean]
+    inputBinding:
+      prefix: --parallel-realign
+      position: 5
+      
+outputs:
+  realigned:
+    type: File
+    outputBinding:
+      glob: "realigned.bam"
+    secondaryFiles:
+      - .bai

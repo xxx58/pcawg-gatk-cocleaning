@@ -1,0 +1,67 @@
+class: CommandLineTool
+cwlVersion: v1.0
+label: GATK BaseRecalibrator
+
+hints:
+  requirements:
+    - class: ResourceRequirement
+      coresMin: 8
+
+requirements: 
+  - class: DockerRequirement
+    dockerPull: "opengenomics/gatk-cocleaning:v1.0"
+
+baseCommand: 
+  - "java"
+  - "-jar"
+  - "/opt/GenomeAnalysisTK.jar"
+
+arguments:
+  - 
+    valueFrom: "BaseRecalibrator"
+    prefix: -T
+    position: 1
+    separate: true
+  - 
+    valueFrom: 8
+    prefix: -nct
+    position: 2
+    separate: true
+  - 
+    valueFrom: "recal_data.table"
+    prefix: -o
+    position: 3
+    separate: true
+
+inputs: 
+  input_bam:
+    type: File
+    inputBinding: 
+      prefix: -I
+      position: 5
+      separate: true
+    secondaryFiles:
+      - .bai
+
+  reference:
+    type: File
+    inputBinding: 
+      prefix: -R
+      position: 4
+      separate: true
+    secondaryFiles:
+      - .fai
+      - ^.dict
+
+  knownSites:
+    type: ["null", File]
+    inputBinding: 
+      prefix: -knownSites
+      position: 6
+      separate: true
+
+outputs: 
+  output_report:
+    type: File
+    outputBinding: 
+      glob: "recal_data.table"

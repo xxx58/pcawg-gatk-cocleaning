@@ -1,52 +1,50 @@
-class: CommandLineTool
-label: GATK Indel Realignment
+class: Workflow
+label: GATK Co-Cleaning
 cwlVersion: v1.0
-baseCommand: [ /usr/bin/python3, /opt/indel_realign.py, --workdir, ./, --mem, '16', --java, /usr/bin/java ]
-hints:
-  DockerRequirement:
-    dockerImageId: "gitc:v1.2"
-requirements:
-  - class: InlineJavascriptRequirement
+
 inputs:
-  reads:
-    type: string[]
-    inputBinding:
-      prefix: -I
-      position: 1
+  input_bams:
+    type: File[]
+
   reference:
     type: File
-    inputBinding:
-      prefix: -R
-      position: 2
-  known:
-    type: string[]
-    inputBinding:
-      prefix: --known
-      position: 3
-  parallel_realign:
-    type: ["null", boolean]
-    inputBinding:
-      prefix: --parallel-realign
-      position: 4
-      
-arguments:
-  - prefix: -o
-    valueFrom: |
-      {
-        readfile = [].concat($job.inputs.reads)
-        file_path = readfile[0].path
-        filename = file_path.split('/').slice(-1)[0]
-        filebase = filename.split('.').slice(0, 1).join('.')
-        out_name = filebase.concat(".realigned.bam")
-        return out_name
-      }
-    position: 5
+    secondaryFiles:
+      - .fai
+      - .dict
 
 outputs:
-  realigned:
+  cleaned_bam:
     type: File
-    outputBinding:
-      glob: "*.realigned.bam"
+    outputsource: printreads/output
+    secondaryFiles:
+      - .bai
 
+steps:
+  indel_realign:
+    run: ./indel_realign.cwl.yaml
+    in:
+      input_bams: input_bams
+      reference: reference
+      known: null
+      parallel_realign: true
+    out:
+      - realigned
 
-###$job.inputs.reads.path.split('/').slice(-1)[0].split('.').slice(0, -1).join('.') + '.realigned.bam'
+  bqsr:
+    run: ./gatk_bqsr.cwl.yaml
+    in:
+      input_bam: indel_realign/realigned
+      reference: reference
+      knownSites: null
+    out:
+      - output_report
+
+  printreads:
+    run: ./gatk_printreads.cwl.yaml
+    in: 
+      input_bam: indel_realign/realigned
+      reference: reference
+      emit_oq: false
+      bqsr: bwsr/output_report
+    out:
+      - output

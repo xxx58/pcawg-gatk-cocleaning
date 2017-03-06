@@ -1,0 +1,76 @@
+class: CommandLineTool
+cwlVersion: v1.0
+label: GATK PrintReads
+
+hints:
+  requirements:
+    - class: ResourceRequirement
+      coresMin: 8
+
+requirements: 
+  - class: DockerRequirement
+    dockerPull: "opengenomics/gatk-cocleaning:v1.0"
+
+baseCommand: 
+  - "java"
+  - "-jar"
+  - "/opt/GenomeAnalysisTK.jar"
+
+arguments: 
+  - 
+    valueFrom: "PrintReads"
+    prefix: -T
+    position: 1
+    separate: true
+  - 
+    valueFrom: 8
+    prefix: -nct
+    position: 2
+    separate: true
+  - 
+    valueFrom: "output.bam"
+    prefix: -o
+    position: 3
+    separate: true
+
+inputs: 
+  input_bam:
+    type: File
+    inputBinding: 
+      prefix: -I
+      position: 5
+      separate: true
+    secondaryFiles:
+      - .bai
+
+  reference:
+    type: File
+    inputBinding: 
+      prefix: -R
+      position: 4
+      separate: true
+    secondaryFiles:
+      - .fai
+      - ^.dict
+
+  emit_oq:
+    type: ["null", boolean]
+    inputBinding: 
+      prefix: --emit_original_quals
+      position: 6
+      separate: true
+
+  bqsr:
+    type: File
+    inputBinding: 
+      prefix: -BQSR
+      position: 7
+      separate: true
+
+outputs: 
+  output:
+    type: File
+    outputBinding: 
+      glob: "output.bam"
+    secondaryFiles:
+      - .bai
