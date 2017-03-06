@@ -3,7 +3,12 @@ label: GATK Co-Cleaning
 cwlVersion: v1.0
 
 inputs:
-  input_bam:
+  tumor_bam:
+    type: File
+    secondaryFiles:
+      - .bai
+
+  normal_bam:
     type: File
     secondaryFiles:
       - .bai
@@ -26,36 +31,63 @@ inputs:
       - .dict
 
 outputs:
-  cleaned_bam:
+  cleaned_tumor_bam:
     type: File
-    outputsource: printreads/output
+    outputsource: printreads_tumor/output
+    secondaryFiles:
+      - .bai
+
+  cleaned_normal_bam:
+    type: File
+    outputsource: printreads_normal/output
     secondaryFiles:
       - .bai
 
 steps:
-  indel_realign:
+  - id: indel_realign
     run: ./indel_realign.cwl.yaml
     in:
-      input_bam: input_bam
+      tumor_bam: tumor_bam
+      normal_bam: tumor_bam
       reference: reference
       knownIndels: null
       parallel_realign: true
-    out:
-      - realigned
+      out:
+        - tumor_realigned
+        - normal_realigned
 
-  bqsr:
+  - id: bqsr_tumor
     run: ./gatk_bqsr.cwl.yaml
     in:
-      input_bam: indel_realign/realigned
+      input_bam: indel_realign/realigned_tumor
       reference: reference
       knownSites: null
-    out:
-      - output_report
-
-  printreads:
+      out:
+        - output_report
+          
+  - id: printreads_tumor
     run: ./gatk_printreads.cwl.yaml
     in: 
-      input_bam: indel_realign/realigned
+      input_bam: indel_realign/realigned_tumor
+      reference: reference
+      emit_oq: false
+      bqsr: bwsr/output_report
+    out:
+      - output
+
+  - id: bqsr_normal
+    run: ./gatk_bqsr.cwl.yaml
+    in:
+      input_bam: indel_realign/realigned_normal
+      reference: reference
+      knownSites: null
+      out:
+        - output_report
+          
+  - id: printreads_normal
+    run: ./gatk_printreads.cwl.yaml
+    in: 
+      input_bam: indel_realign/realigned_normal
       reference: reference
       emit_oq: false
       bqsr: bwsr/output_report
