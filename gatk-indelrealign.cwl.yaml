@@ -10,6 +10,9 @@ hints:
 requirements:
   - class: DockerRequirement
     dockerPull: "opengenomics/gatk-cocleaning:v1.0"
+  - class: ResourceRequirement
+    coresMin: 12
+    ramMin: 50
 
 baseCommand: 
   - "python2.7"
@@ -25,13 +28,21 @@ arguments:
     valueFrom: "normal_realigned.bam"
     prefix: -o
     position: 2
+  - 
+    valueFrom: "12"
+    prefix: --ncpus
+    position: 3
+  - 
+    valueFrom: "50"
+    prefix: --mem
+    position: 4
 
 inputs:
   tumor_bam:
     type: File
     inputBinding:
       prefix: -I
-      position: 3
+      position: 5
     secondaryFiles:
       - .bai
 
@@ -39,7 +50,7 @@ inputs:
     type: File
     inputBinding:
       prefix: -I
-      position: 4
+      position: 6
     secondaryFiles:
       - .bai
 
@@ -47,7 +58,7 @@ inputs:
     type: File
     inputBinding:
       prefix: -R
-      position: 5
+      position: 7
     secondaryFiles:
       - .fai
       - ^.dict
@@ -57,15 +68,16 @@ inputs:
       - "null"
       - type: array
         items: File
+        inputBinding:
+          prefix: --known
     inputBinding:
-      prefix: --known
-      position: 6
+      position: 8
 
   parallel_realign:
     type: ["null", boolean]
     inputBinding:
       prefix: --parallel-realign
-      position: 7
+      position: 9
       
 outputs:
   tumor_realigned:

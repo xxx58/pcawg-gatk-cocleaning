@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
+import argparse
+import logging
 import os
 import shutil
 import subprocess
+import sys
 import tempfile
-import argparse
-import logging
-from string import Template
+
 from multiprocessing import Pool
+from string import Template
 
 
 def which(cmd):
@@ -54,11 +58,11 @@ def cmd_caller(cmd):
         stderr=subprocess.PIPE)
     stdout, stderr = p.communicate()
     if p.returncode != 0:
-        print "Failed job: %s" % (cmd)
-        print "--stdout--"
-        print stdout
-        print "--stderr--"
-        print stderr
+        print("Failed job: %s" % (cmd), file=sys.stderr)
+        print("--stdout--", file=sys.stderr)
+        print(stdout, file=sys.stderr)
+        print("--stderr--", file=sys.stderr)
+        print(stderr, file=sys.stderr)
     return p.returncode
 
 
