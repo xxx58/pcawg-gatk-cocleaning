@@ -367,7 +367,7 @@ if __name__ == "__main__":
     parser.add_argument("-R", "--reference", required=True)
     parser.add_argument("--ncpus", type=int, default=8)
     parser.add_argument("--mem", type=int, default=16)
-    parser.add_argument("--workdir", default="/tmp")
+    parser.add_argument("--workdir", default=".")
     parser.add_argument("--known", action="append", default=[])
     parser.add_argument("-o", "--out", action="append", required=True)
     parser.add_argument("--no-clean", action="store_true", default=False)

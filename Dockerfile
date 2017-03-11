@@ -5,4 +5,5 @@ RUN mv * /opt/
 RUN mv /opt/GATK36.jar /opt/GenomeAnalysisTK.jar
 ADD indel_realign.py /opt/
 WORKDIR /tmp
+VOLUME /tmp
 CMD ["bash"]

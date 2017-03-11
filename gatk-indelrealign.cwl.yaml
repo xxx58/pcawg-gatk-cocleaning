@@ -11,8 +11,8 @@ requirements:
   - class: DockerRequirement
     dockerPull: "opengenomics/gatk-cocleaning:v1.0"
   - class: ResourceRequirement
-    coresMin: 12
-    ramMin: 50
+    coresMin: 16
+    ramMin: 60
 
 baseCommand: 
   - "python2.7"
@@ -33,7 +33,7 @@ arguments:
     prefix: --ncpus
     position: 3
   - 
-    valueFrom: "50"
+    valueFrom: "60"
     prefix: --mem
     position: 4
 
