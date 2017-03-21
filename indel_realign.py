@@ -5,6 +5,7 @@ from __future__ import print_function
 import argparse
 import logging
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -262,8 +263,9 @@ def run_indel_realign(args):
         subprocess.check_call([samtools, "faidx", ref_seq])
 
     ref_dict = os.path.join(workdir, "ref_genome.dict")
-    if os.path.exists(args["reference"].replace(".fasta", ".dict")):
-        os.symlink(args["reference"].replace(".fasta", ".dict"), ref_dict)
+    input_dict = re.sub("\.fa(sta)?(\.dict)?", ".dict", args["reference"])
+    if os.path.exists(input_dict):
+        os.symlink(input_dict, ref_dict)
     else:
         subprocess.check_call([
             args['java'], "-jar",
