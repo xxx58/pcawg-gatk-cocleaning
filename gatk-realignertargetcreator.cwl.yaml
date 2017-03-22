@@ -96,7 +96,7 @@ inputs:
       ignored unless the --mismatchFraction argument is used. optional parameter.
 
 outputs:
-  realignTarget:
+  target_intervals:
     type: File
     outputBinding:
       glob: forIndelRealigner.intervals
