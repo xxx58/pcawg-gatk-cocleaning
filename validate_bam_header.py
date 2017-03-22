@@ -110,7 +110,7 @@ def get_header(inbam, tmpdir):
 
 def validate_rg(rg_lines):
     for i, rg in rg_lines.items():
-        if all(k in rg.keys() for k in ["ID", "SM", "PL"]):
+        if not all(k in rg.keys() for k in ["ID", "SM", "PL"]):
             return False
     return True
 
@@ -151,7 +151,7 @@ def process_header(args, header, tmpdir):
                     rg_lines[i][key] = to_iso8601(value)
                 else:
                     rg_lines[i][key] = value
-
+                   
     for line, rg in rg_lines.items():
         rg_line = ["@RG"]
         for k, v in rg.items():
