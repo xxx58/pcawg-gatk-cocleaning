@@ -1,0 +1,102 @@
+cwlVersion: v1.0
+class: CommandLineTool
+label: GATK RealignerTargetCreator
+doc: |
+  GATK-RealignTargetCreator.cwl is developed for CWL consortium
+    It accepts 3 input files and produces a file containing list of target intervals to pass to the IndelRealigner.
+    Usage: java -jar GenomeAnalysisTK.jar -T RealignerTargetCreator -R reference.fasta -I input.bam --known indels.vcf -o forIndelRealigner.intervals
+
+hints:
+  - class: ResourceRequirement
+    coresMin: 8
+    ramMin: 32
+
+requirements: 
+  - class: DockerRequirement
+    dockerPull: "opengenomics/gatk-cocleaning:v1.0"  
+
+baseCommand:
+  - "java"
+
+arguments:
+  - valueFrom: RealignerTargetCreator
+    prefix: -T
+    position: 1
+
+  - valueFrom: forIndelRealigner.intervals
+    prefix: -o 
+
+  - valueFrom: $(runtime.cores)
+    prefix: -nt
+
+inputs:
+  GATKJar:
+    type: File
+    default: /opt/GenomeAnalysisTK.jar
+    inputBinding:
+      position: 0
+      prefix: -jar
+  
+  input_bam:
+    type:
+      - type: array
+        items: File
+        inputBinding:
+          prefix: -I
+    secondaryFiles:
+      - .bai
+    doc: coordinate sorted and indexed BAM file
+
+  reference:
+    type: File
+    inputBinding:
+      prefix: -R
+    secondaryFiles:
+      - .fai
+      - ^.dict
+    doc: human reference sequence along with the secondary files.
+
+  maxIntervalSize:
+    type: int?
+    inputBinding:
+      prefix: --maxIntervalSize
+    doc: maximum interval size; any intervals larger than this value will be dropped.
+      optional paramter
+
+  minReadsAtLocus:
+    type: int?
+    inputBinding:
+      prefix: --minReadsAtLocus
+      position: 2
+    doc: minimum reads at a locus to enable using the entropy calculation
+
+  windowSize:
+    type: int?
+    inputBinding:
+      prefix: --windowSize
+    doc: window size for calculating entropy or SNP clusters
+
+  mismatchFraction:
+    type: float?
+    inputBinding:
+      prefix: --mismatchFraction
+    doc: fraction of base qualities needing to mismatch for a position to have high
+      entropy
+
+  known:
+    type:
+    - "null"
+    - type: array
+      items: File
+      inputBinding:
+        prefix: --known
+    doc: Any number of VCF files representing known SNPs and/or indels. Could be e.g.
+      dbSNP and/or official 1000 Genomes indel calls. SNPs in these files will be
+      ignored unless the --mismatchFraction argument is used. optional parameter.
+
+outputs:
+  realignTarget:
+    type: File
+    outputBinding:
+      glob: $(inputs.outputfile_realignTarget)
+

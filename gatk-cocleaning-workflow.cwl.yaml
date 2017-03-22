@@ -16,19 +16,16 @@ inputs:
         items: File
 
   knownSites:
-    type: ["null", File]
+    type: 
+      - "null"
+      - type: array
+        items: File
 
   reference:
     type: File
     secondaryFiles:
       - .fai
       - ^.dict
-
-  parallel_realign:
-    type: ["null", boolean]
-
-  emit_oq:
-    type: ["null", boolean]
     
 outputs:
   cleaned_tumor_bam:
@@ -62,22 +59,32 @@ steps:
     out:
       - output_bam
 
-  indel_realign:
-    run: gatk-indelrealign.cwl.yaml
+  realigner_target_creator:
+    run: gatk-realignertargetcreator.cwl.yaml
     in:
       tumor_bam: reheader_tumor/output_bam
       normal_bam: reheader_normal/output_bam
       reference: reference
       knownIndels: knownIndels
-      parallel_realign: parallel_realign
+    out:
+      - realignTarget
+      - normal_realigned
+
+  indel_realigner:
+    run: gatk-indelrealigner.cwl.yaml
+    in:
+      tumor_bam: reheader_tumor/output_bam
+      normal_bam: reheader_normal/output_bam
+      reference: reference
+      knownIndels: knownIndels
     out:
       - tumor_realigned
       - normal_realigned
 
   bqsr_tumor:
-    run: gatk-bqsr.cwl.yaml
+    run: gatk-baserecalibrator.cwl.yaml
     in:
-      input_bam: indel_realign/tumor_realigned
+      input_bam: indel_realigner/tumor_realigned
       reference: reference
       knownSites: knownSites
     out:
@@ -86,17 +93,16 @@ steps:
   printreads_tumor:
     run: gatk-printreads.cwl.yaml
     in: 
-      input_bam: indel_realign/tumor_realigned
+      input_bam: indel_realigner/tumor_realigned
       reference: reference
-      emit_oq: emit_oq
       bqsr: bqsr_tumor/output_report
     out:
       - output
 
   bqsr_normal:
-    run: gatk-bqsr.cwl.yaml
+    run: gatk-baserecalibrator.cwl.yaml
     in:
-      input_bam: indel_realign/normal_realigned
+      input_bam: indel_realigner/normal_realigned
       reference: reference
       knownSites: knownSites
     out:
@@ -105,9 +111,8 @@ steps:
   printreads_normal:
     run: gatk-printreads.cwl.yaml
     in: 
-      input_bam: indel_realign/normal_realigned
+      input_bam: indel_realigner/normal_realigned
       reference: reference
-      emit_oq: emit_oq
       bqsr: bqsr_normal/output_report
     out:
       - output
