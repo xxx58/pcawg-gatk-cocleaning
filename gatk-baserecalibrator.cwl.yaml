@@ -16,6 +16,8 @@ requirements:
 
 baseCommand: 
   - "java"
+  - "-jar"
+  - "/opt/GenomeAnalysisTK.jar"
 
 arguments:
   - valueFrom: BaseRecalibrator
@@ -29,13 +31,6 @@ arguments:
     prefix: -o
 
 inputs:
-  GATKJar:
-    type: File
-    default: /opt/GenomeAnalysisTK.jar
-    inputBinding:
-      position: 0
-      prefix: -jar
-
   input_bam:
     type: File
     inputBinding: 

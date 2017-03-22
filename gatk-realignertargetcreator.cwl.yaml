@@ -17,6 +17,8 @@ requirements:
 
 baseCommand:
   - "java"
+  - "-jar"
+  - "/opt/GenomeAnalysisTK.jar"
 
 arguments:
   - valueFrom: RealignerTargetCreator
@@ -30,13 +32,6 @@ arguments:
     prefix: -nt
 
 inputs:
-  GATKJar:
-    type: File
-    default: /opt/GenomeAnalysisTK.jar
-    inputBinding:
-      position: 0
-      prefix: -jar
-  
   input_bam:
     type:
       - type: array

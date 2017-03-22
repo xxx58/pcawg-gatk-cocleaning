@@ -17,6 +17,8 @@ requirements:
 
 baseCommand:
   - "java"
+  - "-jar"
+  - "/opt/GenomeAnalysisTK.jar"
 
 arguments:
   - valueFrom: IndelRealigner
@@ -30,13 +32,6 @@ arguments:
     prefix: -nWayOut
 
 inputs:
-  GATKJar:
-    type: File
-    default: /opt/GenomeAnalysisTK.jar
-    inputBinding:
-      position: 0
-      prefix: -jar
-
   tumor_bam:
     type: File
     inputBinding:
