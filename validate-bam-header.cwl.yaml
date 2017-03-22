@@ -8,7 +8,7 @@ requirements:
 
 baseCommand: 
   - "python"
-  - "validate_bam_header.py"
+  - "/opt/validate_bam_header.py"
 
 arguments:
   - valueFrom: reheadered.bam

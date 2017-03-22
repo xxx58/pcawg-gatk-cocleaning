@@ -5,6 +5,7 @@ USER root
 RUN mv * /opt/
 RUN ln /opt/GATK36.jar /opt/GenomeAnalysisTK.jar
 ADD indel_realign.py /opt/
+ADD validate_bam_header.py /opt/
 
 WORKDIR /opt
 RUN wget https://github.com/broadinstitute/picard/releases/download/1.122/picard-tools-1.122.zip
