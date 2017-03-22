@@ -5,13 +5,9 @@ label: GATK Co-Cleaning Workflow
 inputs:
   tumor_bam:
     type: File
-    secondaryFiles:
-      - .bai
 
   normal_bam:
     type: File
-    secondaryFiles:
-      - .bai
 
   knownIndels:
     type:
@@ -48,11 +44,41 @@ outputs:
       - .bai
 
 steps:
+  reheader_tumor:
+    run: validate-bam-header.cwl.yaml
+    in:
+      input_bam: tumor_bam
+      PL: "ILLUMINA"
+    out:
+      - output_bam
+
+  index_tumor:
+    run: samtools-index.cwl.yaml
+    in:
+      input_bam: reheader_tumor/output_bam
+    out:
+      - output_bai
+
+  reheader_normal:
+    run: alidate-bam-header.cwl.yaml
+    in:
+      input_bam: normal_bam
+      PL: "ILLUMINA"
+    out:
+      - output_bam
+
+  index_tumor:
+    run: samtools-index.cwl.yaml
+    in:
+      input_bam: reheader_tumor/output_bam
+    out:
+      - output_bai
+
   indel_realign:
     run: gatk-indelrealign.cwl.yaml
     in:
-      tumor_bam: tumor_bam
-      normal_bam: normal_bam
+      tumor_bam: tumor_reheader/output_bam
+      normal_bam: normal_reheader/output_bam
       reference: reference
       knownIndels: knownIndels
       parallel_realign: parallel_realign

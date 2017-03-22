@@ -1,0 +1,110 @@
+class: CommandLineTool
+cwlVersion: v1.0
+label: Validate BAM header
+
+requirements: 
+  - class: DockerRequirement
+    dockerPull: "opengenomics/gatk-cocleaning:v1.0"
+
+baseCommand: 
+  - "python"
+  - "validate_bam_header.py"
+
+inputs:
+  input_bam:
+    type: File
+    inputBinding: 
+      position: 1
+
+  output_bam:
+    type: File
+    inputBinding: 
+      position: 2
+
+  ID:
+    type: 
+      - "null"
+      - string
+    inputBinding: 
+      position: 3
+      separate: true
+
+  LB:
+    type: 
+      - "null"
+      - string
+    inputBinding: 
+      prefix: --LB
+      separate: true
+
+  PL:
+    type: 
+      - "null"
+      - string
+    inputBinding: 
+      prefix: --PL
+      separate: true
+
+  PU:
+    type: 
+      - "null"
+      - string
+    inputBinding: 
+      prefix: --PU
+      separate: true
+
+  CN:
+    type: 
+      - "null"
+      - string
+    inputBinding: 
+      prefix: --CN
+      separate: true
+
+  DS:
+    type: 
+      - "null"
+      - string
+    inputBinding: 
+      prefix: --DS
+      separate: true
+
+  DT:
+    type: 
+      - "null"
+      - string
+    inputBinding: 
+      prefix: --DT
+      separate: true
+
+  PI:
+    type: 
+      - "null"
+      - string
+    inputBinding: 
+      prefix: --PI
+      separate: true
+
+  PG:
+    type: 
+      - "null"
+      - string
+    inputBinding: 
+      prefix: --PG
+      separate: true
+
+  PM:
+    type: 
+      - "null"
+      - string
+    inputBinding: 
+      prefix: --PM
+      separate: true
+
+outputs: 
+  output_bam:
+    type: File
+    outputBinding:
+      glob: $(inputs.output_bam)
+    secondaryFiles:
+      - .bai
