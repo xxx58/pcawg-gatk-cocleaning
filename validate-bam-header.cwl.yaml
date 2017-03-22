@@ -10,101 +10,78 @@ baseCommand:
   - "python"
   - "validate_bam_header.py"
 
+arguments:
+  - valueFrom: reheadered.bam
+    position: 1
+
 inputs:
   input_bam:
     type: File
     inputBinding: 
-      position: 1
-
-  output_bam:
-    type: File
-    inputBinding: 
-      position: 2
-
-  ID:
-    type: 
-      - "null"
-      - string
-    inputBinding: 
-      position: 3
-      separate: true
-
-  LB:
-    type: 
-      - "null"
-      - string
-    inputBinding: 
-      prefix: --LB
-      separate: true
-
-  PL:
-    type: 
-      - "null"
-      - string
-    inputBinding: 
-      prefix: --PL
-      separate: true
-
-  PU:
-    type: 
-      - "null"
-      - string
-    inputBinding: 
-      prefix: --PU
-      separate: true
+      position: 0
 
   CN:
-    type: 
-      - "null"
-      - string
+    type: string?
     inputBinding: 
       prefix: --CN
-      separate: true
 
   DS:
-    type: 
-      - "null"
-      - string
+    type: string?
     inputBinding: 
       prefix: --DS
-      separate: true
 
   DT:
-    type: 
-      - "null"
-      - string
+    type: string?
     inputBinding: 
       prefix: --DT
-      separate: true
 
-  PI:
-    type: 
-      - "null"
-      - string
+  ID:
+    type: string?
     inputBinding: 
-      prefix: --PI
-      separate: true
+      prefix: --ID
+
+  LB:
+    type: string?
+    inputBinding: 
+      prefix: --LB
 
   PG:
-    type: 
-      - "null"
-      - string
+    type: string?
     inputBinding: 
       prefix: --PG
-      separate: true
+
+  PI:
+    type: string?
+    inputBinding: 
+      prefix: --PI
 
   PM:
-    type: 
-      - "null"
-      - string
+    type: string?
     inputBinding: 
       prefix: --PM
-      separate: true
+
+  PL:
+    type: string?
+    inputBinding: 
+      prefix: --PL
+
+  PU:
+    type: string?
+    inputBinding: 
+      prefix: --PU
+
+  SM:
+    type: string?
+    inputBinding: 
+      prefix: --SM
 
 outputs: 
   output_bam:
     type: File
     outputBinding:
-      glob: $(inputs.output_bam)
-    secondaryFiles:
-      - .bai
+      glob: reheadered.bam
+
+  output_bai:
+    type: File
+    outputBinding:
+      glob: reheadered.bam.bai

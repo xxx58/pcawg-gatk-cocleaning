@@ -4,7 +4,7 @@ label: GATK RealignerTargetCreator
 doc: |
   GATK-RealignTargetCreator.cwl is developed for CWL consortium
     It accepts 3 input files and produces a file containing list of target intervals to pass to the IndelRealigner.
-    Usage: java -jar GenomeAnalysisTK.jar -T RealignerTargetCreator -R reference.fasta -I input.bam --known indels.vcf -o forIndelRealigner.intervals
+    Usage: java -jar GenomeAnalysisTK.jar -T RealignerTargetCreator -R reference.fasta -I input1.bam -I input2.bam --known indels.vcf -o forIndelRealigner.intervals
 
 hints:
   - class: ResourceRequirement
@@ -43,18 +43,24 @@ inputs:
         items: File
         inputBinding:
           prefix: -I
-    secondaryFiles:
-      - .bai
-    doc: coordinate sorted and indexed BAM file
+    doc: one or more coordinate sorted and indexed BAM files
+
+  input_bai:
+    type:
+      - type: array
+        items: File
 
   reference:
     type: File
     inputBinding:
       prefix: -R
-    secondaryFiles:
-      - .fai
-      - ^.dict
     doc: human reference sequence along with the secondary files.
+
+  reference_fai:
+    type: File
+
+  reference_dict:
+    type: File
 
   maxIntervalSize:
     type: int?
@@ -98,5 +104,5 @@ outputs:
   realignTarget:
     type: File
     outputBinding:
-      glob: $(inputs.outputfile_realignTarget)
+      glob: forIndelRealigner.intervals
 

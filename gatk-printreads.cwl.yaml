@@ -40,16 +40,20 @@ inputs:
     type: File
     inputBinding: 
       prefix: -I
-    secondaryFiles:
-      - .bai
+
+  input_bai:
+    type: File
 
   reference:
     type: File
     inputBinding: 
       prefix: -R
-    secondaryFiles:
-      - .fai
-      - ^.dict
+
+  reference_fai:
+    type: File
+
+  reference_dict:
+    type: File
 
   bqsr:
     type: File
@@ -92,5 +96,9 @@ outputs:
     type: File
     outputBinding: 
       glob: "cleaned.bam"
-    secondaryFiles:
-      - .bai
+
+  output_bai:
+    type: File
+    outputBinding: 
+      glob: "cleaned.bam.bai"
+

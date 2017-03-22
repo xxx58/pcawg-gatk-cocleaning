@@ -41,25 +41,30 @@ inputs:
     type: File
     inputBinding:
       prefix: -I
-    secondaryFiles:
-      - ^.bai
     doc: bam file produced after markDups execution
+
+  tumor_bai:
+    type: File
 
   normal_bam:
     type: File?
     inputBinding:
       prefix: -I
-    secondaryFiles:
-      - ^.bai
     doc: bam file produced after markDups execution
+
+  normal_bai:
+    type: File
 
   reference:
     type: File
     inputBinding:
       prefix: -R
-    secondaryFiles:
-      - .fai
-      - ^.dict
+
+  reference_fai:
+    type: File
+
+  reference_dict:
+    type: File
 
   intervals:
     type: File
@@ -150,12 +155,18 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.tumor_bam.nameroot).realigned.bam
-    secondaryFiles:
-      - .bai
+
+  tumor_realigned_bai:
+    type: File
+    outputBinding:
+      glob: $(inputs.tumor_bam.nameroot).realigned.bam.bai
 
   normal_realigned:
     type: File
     outputBinding:
       glob: $(inputs.normal_bam.nameroot).realigned.bam
-    secondaryFiles:
-      - .bai
+
+  normal_realigned_bai:
+    type: File
+    outputBinding:
+      glob: $(inputs.normal_bam.nameroot).realigned.bam.bai

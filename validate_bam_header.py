@@ -39,15 +39,6 @@ def collect_args():
     parser.add_argument("--DT",
                         help="Date the run was produced (ISO8601 date or \
                         date/time)")
-    parser.add_argument(
-        "--FO",
-        help="Flow order. The array of nucleotide bases that correspond to the \
-        nucleotides used for each flow of each read. Multi-base flows are \
-        encoded in IUPAC format, and non-nucleotide flows by various other \
-        characters. Format: /\*|[ACMGRSVTWYHKDBN]+/")
-    parser.add_argument("--KS",
-                        help="The array of nucleotide bases that correspond to \
-                        the key sequence of each read.")
     parser.add_argument("--LB",
                         help="Library. Ex: 'WGS:<center_name>:<lib_id>'")
     parser.add_argument("--PG",
