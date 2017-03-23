@@ -25,9 +25,6 @@ arguments:
     prefix: -T
     position: 1
 
-  - valueFrom: $(runtime.cores)
-    prefix: -nt
-
   - valueFrom: .realigned.bam
     prefix: -nWayOut
 

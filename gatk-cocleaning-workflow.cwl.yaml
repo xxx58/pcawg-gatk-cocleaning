@@ -91,6 +91,7 @@ steps:
       tumor_bai: reheader_tumor/output_bai
       normal_bam: reheader_normal/output_bam
       normal_bai: reheader_normal/output_bai
+      reference: reference
       reference_fai: reference_fai
       reference_dict: reference_dict
       knownIndels: knownIndels
