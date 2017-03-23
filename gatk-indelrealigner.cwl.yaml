@@ -25,7 +25,7 @@ arguments:
     prefix: -T
     position: 1
 
-  - valueFrom: .realigned.bam
+  - valueFrom: .realigned
     prefix: -nWayOut
 
 inputs:
@@ -146,19 +146,19 @@ outputs:
   tumor_realigned:
     type: File
     outputBinding:
-      glob: $(inputs.tumor_bam.nameroot).realigned.bam
+      glob: $(inputs.tumor_bam.nameroot).realigned
 
   tumor_realigned_bai:
     type: File
     outputBinding:
-      glob: $(inputs.tumor_bam.nameroot).realigned.bam.bai
+      glob: $(inputs.tumor_bam.nameroot).realigned.bai
 
   normal_realigned:
     type: File
     outputBinding:
-      glob: $(inputs.normal_bam.nameroot).realigned.bam
+      glob: $(inputs.normal_bam.nameroot).realigned
 
   normal_realigned_bai:
     type: File
     outputBinding:
-      glob: $(inputs.normal_bam.nameroot).realigned.bam.bai
+      glob: $(inputs.normal_bam.nameroot).realigned.bai
