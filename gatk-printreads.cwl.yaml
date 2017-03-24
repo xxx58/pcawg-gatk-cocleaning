@@ -18,16 +18,14 @@ baseCommand:
   - "java"
   - "-jar"
   - "/opt/GenomeAnalysisTK.jar"
+  - "-T"
+  - "PrintReads"
 
 arguments: 
-  - valueFrom: "PrintReads"
-    prefix: -T
-    position: 1
-
   - valueFrom: $(runtime.cores)
     prefix: -nct
 
-  - valueFrom: "cleaned.bam"
+  - valueFrom: $(inputs.input_bam.nameroot).cleaned.bam
     prefix: -o
 
 inputs:
@@ -90,10 +88,10 @@ outputs:
   output:
     type: File
     outputBinding: 
-      glob: "cleaned.bam"
+      glob: $(inputs.input_bam.nameroot).cleaned.bam
 
   output_bai:
     type: File
     outputBinding: 
-      glob: "cleaned.bam.bai"
+      glob: $(inputs.input_bam.nameroot).cleaned.bam.bai
 

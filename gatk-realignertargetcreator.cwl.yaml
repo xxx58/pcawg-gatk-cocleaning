@@ -19,12 +19,10 @@ baseCommand:
   - "java"
   - "-jar"
   - "/opt/GenomeAnalysisTK.jar"
+  - "-T"
+  - "RealignerTargetCreator"
 
 arguments:
-  - valueFrom: RealignerTargetCreator
-    prefix: -T
-    position: 1
-
   - valueFrom: forIndelRealigner.intervals
     prefix: -o 
 
@@ -38,6 +36,8 @@ inputs:
         items: File
         inputBinding:
           prefix: -I
+    inputBinding:
+      position: 1
     doc: one or more coordinate sorted and indexed BAM files
 
   input_bai:
@@ -84,13 +84,15 @@ inputs:
     doc: fraction of base qualities needing to mismatch for a position to have high
       entropy
 
-  known:
+  knownIndels:
     type:
     - "null"
     - type: array
       items: File
       inputBinding:
         prefix: --known
+    inputBinding:
+      position: 1
     doc: Any number of VCF files representing known SNPs and/or indels. Could be e.g.
       dbSNP and/or official 1000 Genomes indel calls. SNPs in these files will be
       ignored unless the --mismatchFraction argument is used. optional parameter.

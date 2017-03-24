@@ -19,12 +19,10 @@ baseCommand:
   - "java"
   - "-jar"
   - "/opt/GenomeAnalysisTK.jar"
+  - "-T"
+  - "IndelRealigner"
 
 arguments:
-  - valueFrom: IndelRealigner
-    prefix: -T
-    position: 1
-
   - valueFrom: .realigned.bam
     prefix: -nWayOut
 
@@ -71,6 +69,8 @@ inputs:
       items: File
       inputBinding:
         prefix: --known
+    inputBinding:
+      position: 1
     doc: Any number of VCF files representing known SNPs and/or indels. Could be e.g.
       dbSNP and/or official 1000 Genomes indel calls. SNPs in these files will be
       ignored unless the --mismatchFraction argument is used. optional parameter.
