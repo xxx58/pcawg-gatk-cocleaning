@@ -2,6 +2,9 @@ class: Workflow
 cwlVersion: v1.0
 label: GATK Co-Cleaning Workflow
 
+requirements:
+  - class: MultipleInputFeatureRequirement
+
 inputs:
   tumor_bam:
     type: File
