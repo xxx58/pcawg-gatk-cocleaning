@@ -141,13 +141,13 @@ outputs:
   tumor_realigned:
     type: File
     outputBinding:
-      glob: $(inputs.tumor_bam.nameroot).realigned
+      glob: $(inputs.tumor_bam.nameroot).realigned.bam
     secondaryFiles:
-      - .bai
+      - ^.bai
 
   normal_realigned:
     type: File
     outputBinding:
-      glob: $(inputs.normal_bam.nameroot).realigned
+      glob: $(inputs.normal_bam.nameroot).realigned.bam
     secondaryFiles:
-      - .bai
+      - ^.bai
