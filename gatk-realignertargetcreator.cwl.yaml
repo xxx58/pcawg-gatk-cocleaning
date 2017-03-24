@@ -38,24 +38,18 @@ inputs:
           prefix: -I
     inputBinding:
       position: 1
+    secondaryFiles:
+      - .bai
     doc: one or more coordinate sorted and indexed BAM files
-
-  input_bai:
-    type:
-      - type: array
-        items: File
 
   reference:
     type: File
     inputBinding:
       prefix: -R
     doc: human reference sequence along with the secondary files.
-
-  reference_fai:
-    type: File
-
-  reference_dict:
-    type: File
+    secondaryFiles:
+      - .fai
+      - ^.dict
 
   maxIntervalSize:
     type: int?
@@ -102,4 +96,6 @@ outputs:
     type: File
     outputBinding:
       glob: forIndelRealigner.intervals
+    secondaryFiles:
+      - .bai
 

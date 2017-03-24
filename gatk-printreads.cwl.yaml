@@ -33,20 +33,16 @@ inputs:
     type: File
     inputBinding: 
       prefix: -I
-
-  input_bai:
-    type: File
+    secondaryFiles:
+      - .bai
 
   reference:
     type: File
     inputBinding: 
       prefix: -R
-
-  reference_fai:
-    type: File
-
-  reference_dict:
-    type: File
+    secondaryFiles:
+      - .fai
+      - ^.dict
 
   bqsr:
     type: File
@@ -89,9 +85,5 @@ outputs:
     type: File
     outputBinding: 
       glob: $(inputs.input_bam.nameroot).cleaned.bam
-
-  output_bai:
-    type: File
-    outputBinding: 
-      glob: $(inputs.input_bam.nameroot).cleaned.bam.bai
-
+    secondaryFiles:
+      - .bai

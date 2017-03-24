@@ -34,20 +34,16 @@ inputs:
     inputBinding: 
       prefix: -I
     doc: bam file produced after indelRealigner
-
-  input_bai:
-    type: File
+    secondaryFiles:
+      - .bai
 
   reference:
     type: File
     inputBinding: 
       prefix: -R
-
-  reference_fai:
-    type: File
-
-  reference_dict:
-    type: File
+    secondaryFiles:
+      - .fai
+      - ^.dict
 
   knownSites:
     type:

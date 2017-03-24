@@ -80,8 +80,6 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.input_bam.nameroot).reheadered.bam
+    secondaryFiles:
+      - .bai
 
-  output_bai:
-    type: File
-    outputBinding:
-      glob: $(inputs.input_bam.nameroot).reheadered.bam.bai

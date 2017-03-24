@@ -11,41 +11,32 @@ inputs:
 
   knownIndels:
     type:
-      - "null"
       - type: array
         items: File
 
   knownSites:
     type: 
-      - "null"
       - type: array
         items: File
 
   reference:
     type: File
-    
-  reference_fai:
-    type: File
-
-  reference_dict:
-    type: File
+    secondaryFiles:
+      - .fai
+      - ^.dict
 
 outputs:
   cleaned_tumor_bam:
     type: File
     outputSource: printreads_tumor/output
-
-  cleaned_tumor_bai:
-    type: File
-    outputSource: printreads_tumor/output_bai
+    secondaryFiles:
+      - .bai
 
   cleaned_normal_bam:
     type: File
     outputSource: printreads_normal/output
-
-  cleaned_normal_bai:
-    type: File
-    outputSource: printreads_normal/output_bai
+    secondaryFiles:
+      - .bai
 
 steps:
   reheader_tumor:
@@ -56,7 +47,6 @@ steps:
         default: "ILLUMINA"
     out:
       - output_bam
-      - output_bai
 
   reheader_normal:
     run: validate-bam-header.cwl.yaml
@@ -66,7 +56,6 @@ steps:
         default: "ILLUMINA"
     out:
       - output_bam
-      - output_bai
 
   realigner_target_creator:
     run: gatk-realignertargetcreator.cwl.yaml
@@ -74,12 +63,7 @@ steps:
       input_bam: 
         - reheader_tumor/output_bam
         - reheader_normal/output_bam
-      input_bai: 
-        - reheader_tumor/output_bai
-        - reheader_normal/output_bai
       reference: reference
-      reference_fai: reference_fai
-      reference_dict: reference_dict
       knownIndels: knownIndels
     out:
       - target_intervals
@@ -88,28 +72,19 @@ steps:
     run: gatk-indelrealigner.cwl.yaml
     in:
       tumor_bam: reheader_tumor/output_bam
-      tumor_bai: reheader_tumor/output_bai
       normal_bam: reheader_normal/output_bam
-      normal_bai: reheader_normal/output_bai
       reference: reference
-      reference_fai: reference_fai
-      reference_dict: reference_dict
       knownIndels: knownIndels
       intervals: realigner_target_creator/target_intervals
     out:
       - tumor_realigned
-      - tumor_realigned_bai
       - normal_realigned
-      - normal_realigned_bai
 
   bqsr_tumor:
     run: gatk-baserecalibrator.cwl.yaml
     in:
       input_bam: indel_realigner/tumor_realigned
-      input_bai: indel_realigner/tumor_realigned_bai
       reference: reference
-      reference_fai: reference_fai
-      reference_dict: reference_dict
       knownSites: knownSites
     out:
       - output_report
@@ -118,23 +93,16 @@ steps:
     run: gatk-printreads.cwl.yaml
     in: 
       input_bam: indel_realigner/tumor_realigned
-      input_bai: indel_realigner/tumor_realigned_bai
       reference: reference
-      reference_fai: reference_fai
-      reference_dict: reference_dict
       bqsr: bqsr_tumor/output_report
     out:
       - output
-      - output_bai
 
   bqsr_normal:
     run: gatk-baserecalibrator.cwl.yaml
     in:
       input_bam: indel_realigner/normal_realigned
-      input_bai: indel_realigner/normal_realigned_bai
       reference: reference
-      reference_fai: reference_fai
-      reference_dict: reference_dict
       knownSites: knownSites
     out:
       - output_report
@@ -143,11 +111,7 @@ steps:
     run: gatk-printreads.cwl.yaml
     in: 
       input_bam: indel_realigner/normal_realigned
-      input_bai: indel_realigner/normal_realigned_bai
       reference: reference
-      reference_fai: reference_fai
-      reference_dict: reference_dict
       bqsr: bqsr_normal/output_report
     out:
       - output
-      - output_bai
