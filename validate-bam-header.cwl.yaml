@@ -11,7 +11,7 @@ baseCommand:
   - "/opt/validate_bam_header.py"
 
 arguments:
-  - valueFrom: reheadered.bam
+  - valueFrom: $(inputs.input_bam.nameroot).reheadered.bam
     position: 1
 
 inputs:
@@ -79,9 +79,9 @@ outputs:
   output_bam:
     type: File
     outputBinding:
-      glob: reheadered.bam
+      glob: $(inputs.input_bam.nameroot).reheadered.bam
 
   output_bai:
     type: File
     outputBinding:
-      glob: reheadered.bam.bai
+      glob: $(inputs.input_bam.nameroot).reheadered.bam.bai

@@ -156,4 +156,4 @@ outputs:
   output_report:
     type: File
     outputBinding: 
-      glob: "recal_data.table"
+      glob: recal_data.table
