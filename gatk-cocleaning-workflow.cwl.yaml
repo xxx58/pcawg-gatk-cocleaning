@@ -77,7 +77,6 @@ steps:
       tumor_bam: reheader_tumor/output_bam
       normal_bam: reheader_normal/output_bam
       reference: reference
-      knownIndels: knownIndels
       intervals: realigner_target_creator/target_intervals
     out:
       - tumor_realigned
