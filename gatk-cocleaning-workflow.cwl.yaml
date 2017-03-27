@@ -16,11 +16,15 @@ inputs:
     type:
       - type: array
         items: File
+    secondaryFiles:
+      - .tbi
 
   knownSites:
     type: 
       - type: array
         items: File
+    secondaryFiles:
+      - .tbi
 
   reference:
     type: File

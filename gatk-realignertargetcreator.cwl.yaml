@@ -1,10 +1,6 @@
 cwlVersion: v1.0
 class: CommandLineTool
 label: GATK RealignerTargetCreator
-doc: |
-  GATK-RealignTargetCreator.cwl is developed for CWL consortium
-    It accepts 3 input files and produces a file containing list of target intervals to pass to the IndelRealigner.
-    Usage: java -jar GenomeAnalysisTK.jar -T RealignerTargetCreator -R reference.fasta -I input1.bam -I input2.bam --known indels.vcf -o forIndelRealigner.intervals
 
 hints:
   - class: ResourceRequirement
@@ -88,7 +84,7 @@ inputs:
     inputBinding:
       position: 1
     secondaryFiles:
-      - .idx
+      - .tbi
     doc: Any number of VCF files representing known SNPs and/or indels. Could be e.g.
       dbSNP and/or official 1000 Genomes indel calls. SNPs in these files will be
       ignored unless the --mismatchFraction argument is used. optional parameter.

@@ -1,10 +1,6 @@
 cwlVersion: v1.0
 class: CommandLineTool
 label: GATK IndelRealigner
-doc: |
-  GATK-RealignTargetCreator.cwl is developed for CWL consortium
-  It performs local realignment of reads around indels.
-    Usage: java -jar GenomeAnalysisTK.jar -T RealignerTargetCreator -R reference.fasta -I input.bam --known indels.vcf -o forIndelRealigner.intervals.
 
 hints:
   - class: ResourceRequirement
