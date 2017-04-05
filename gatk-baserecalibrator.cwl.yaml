@@ -30,7 +30,7 @@ inputs:
     inputBinding: 
       prefix: -I
     secondaryFiles:
-      - .bai
+      - ^.bai
     doc: bam file produced after indelRealigner
 
   reference:
