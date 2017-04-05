@@ -20,6 +20,7 @@ baseCommand:
   - "/opt/GenomeAnalysisTK.jar"
   - "-T"
   - "PrintReads"
+  - "--disable_auto_index_creation_and_locking_when_reading_rods"
 
 arguments: 
   - valueFrom: $(runtime.cores)
