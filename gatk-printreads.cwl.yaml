@@ -87,4 +87,4 @@ outputs:
     outputBinding: 
       glob: $(inputs.input_bam.nameroot).cleaned.bam
     secondaryFiles:
-      - .bai
+      - ^.bai
