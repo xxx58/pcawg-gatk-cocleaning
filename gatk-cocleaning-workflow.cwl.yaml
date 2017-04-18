@@ -36,14 +36,10 @@ outputs:
   cleaned_tumor_bam:
     type: File
     outputSource: printreads_tumor/output
-    secondaryFiles:
-      - .bai
 
   cleaned_normal_bam:
     type: File
     outputSource: printreads_normal/output
-    secondaryFiles:
-      - .bai
 
 steps:
   reheader_tumor:
