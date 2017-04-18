@@ -12,7 +12,7 @@ hints:
 
 requirements: 
   - class: DockerRequirement
-    dockerPull: "opengenomics/gatk-cocleaning:v1.0"
+    dockerPull: "opengenomics/gatk-cocleaning:latest"
 
 baseCommand: 
   - "java"
