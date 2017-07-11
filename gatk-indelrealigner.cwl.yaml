@@ -40,6 +40,21 @@ inputs:
     secondaryFiles:
       - .bai
 
+  knownIndels:
+    type:
+    - "null"
+    - type: array
+      items: File
+      inputBinding:
+        prefix: --knownAlleles
+    inputBinding:
+      position: 1
+    secondaryFiles:
+      - .tbi
+    doc: Any number of VCF files representing known SNPs and/or indels. Could be e.g.
+      dbSNP and/or official 1000 Genomes indel calls. SNPs in these files will be
+      ignored unless the --mismatchFraction argument is used. optional parameter.
+
   reference:
     type: File
     inputBinding:
@@ -51,7 +66,7 @@ inputs:
   intervals:
     type: File
     inputBinding:
-      prefix: -targetIntervals
+      prefix: --targetIntervals
     doc: list of intervals created by realignerTargetCreataor
 
   maxReadsForConsensuses:
