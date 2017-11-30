@@ -9,7 +9,7 @@ hints:
 
 requirements: 
   - class: DockerRequirement
-    dockerPull: "opengenomics/gatk-cocleaning:latest"  
+    dockerPull: "quay.io/junjun_zhang/pcawg-gatk-cocleaning:0.1.1"
 
 baseCommand:
   - "java"
