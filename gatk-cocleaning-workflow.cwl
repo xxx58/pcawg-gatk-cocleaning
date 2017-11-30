@@ -43,7 +43,7 @@ outputs:
 
 steps:
   realigner_target_creator:
-    run: gatk-realignertargetcreator.cwl.yaml
+    run: gatk-realignertargetcreator.cwl
     in:
       input_bam: 
         - tumor_bam
@@ -54,7 +54,7 @@ steps:
       - target_intervals
 
   indel_realigner:
-    run: gatk-indelrealigner.cwl.yaml
+    run: gatk-indelrealigner.cwl
     in:
       tumor_bam: tumor_bam
       normal_bam: normal_bam
@@ -66,7 +66,7 @@ steps:
       - normal_realigned
 
   bqsr_tumor:
-    run: gatk-baserecalibrator.cwl.yaml
+    run: gatk-baserecalibrator.cwl
     in:
       input_bam: indel_realigner/tumor_realigned
       reference: reference
@@ -75,7 +75,7 @@ steps:
       - output_report
           
   printreads_tumor:
-    run: gatk-printreads.cwl.yaml
+    run: gatk-printreads.cwl
     in: 
       input_bam: indel_realigner/tumor_realigned
       reference: reference
@@ -84,7 +84,7 @@ steps:
       - output
 
   bqsr_normal:
-    run: gatk-baserecalibrator.cwl.yaml
+    run: gatk-baserecalibrator.cwl
     in:
       input_bam: indel_realigner/normal_realigned
       reference: reference
@@ -93,7 +93,7 @@ steps:
       - output_report
           
   printreads_normal:
-    run: gatk-printreads.cwl.yaml
+    run: gatk-printreads.cwl
     in: 
       input_bam: indel_realigner/normal_realigned
       reference: reference
