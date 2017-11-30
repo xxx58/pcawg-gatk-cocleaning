@@ -42,30 +42,12 @@ outputs:
     outputSource: printreads_normal/output
 
 steps:
-  reheader_tumor:
-    run: validate-bam-header.cwl.yaml
-    in:
-      input_bam: tumor_bam
-      PL: 
-        default: "ILLUMINA"
-    out:
-      - output_bam
-
-  reheader_normal:
-    run: validate-bam-header.cwl.yaml
-    in:
-      input_bam: normal_bam
-      PL:
-        default: "ILLUMINA"
-    out:
-      - output_bam
-
   realigner_target_creator:
     run: gatk-realignertargetcreator.cwl.yaml
     in:
       input_bam: 
-        - reheader_tumor/output_bam
-        - reheader_normal/output_bam
+        - tumor_bam
+        - normal_bam
       reference: reference
       knownIndels: knownIndels
     out:
@@ -74,8 +56,8 @@ steps:
   indel_realigner:
     run: gatk-indelrealigner.cwl.yaml
     in:
-      tumor_bam: reheader_tumor/output_bam
-      normal_bam: reheader_normal/output_bam
+      tumor_bam: tumor_bam
+      normal_bam: normal_bam
       reference: reference
       intervals: realigner_target_creator/target_intervals
       knownIndels: knownIndels
