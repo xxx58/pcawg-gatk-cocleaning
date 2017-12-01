@@ -2,7 +2,7 @@
 FROM opengenomics/gatk-cocleaning
 USER root
 
-RUN cp -f indel_realign.py /opt/
+COPY indel_realign.py /opt/
 
 RUN apt-get update && \
     apt-get install --yes python-pip
