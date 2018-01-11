@@ -189,14 +189,15 @@ doc: |
 
     ### Run the workflow
     #### Option 1: Run with CWL tool
-    - Download CWL workflow definition file
+    - Download CWL workflow definition files
     ```
-    wget -O pcawg-gatk-cocleaning.cwl "https://github.com/ICGC-TCGA-PanCancer/pcawg-gatk-cocleaning/blob/0.1.1/gatk-cocleaning-workflow.cwl"
+    wget https://github.com/ICGC-TCGA-PanCancer/pcawg-gatk-cocleaning/archive/0.1.1.tar.gz
+    tar xvf pcawg-gatk-cocleaning-0.1.1.tar.gz
     ```
 
     - Run `cwltool` to execute the workflow
     ```
-    nohup cwltool --debug --non-strict pcawg-gatk-cocleaning.cwl pcawg-gatk-cocleaning.job.json > pcawg-gatk-cocleaning.log 2>&1 &
+    nohup cwltool --debug --non-strict pcawg-gatk-cocleaning-0.1.1/gatk-cocleaning-workflow.cwl pcawg-gatk-cocleaning.job.json > pcawg-gatk-cocleaning.log 2>&1 &
     ```
 
     #### Option 2: Run with the Dockstore CLI
