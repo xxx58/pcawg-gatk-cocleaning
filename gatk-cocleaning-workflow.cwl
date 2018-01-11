@@ -136,7 +136,7 @@ doc: |
 
     #### Reference data files
 
-    The workflow also uses four files as reference, they can be downloaded from the ICGC Data Portal:
+    The workflow also uses the following files as reference, they can be downloaded from the ICGC Data Portal:
 
     - Under https://dcc.icgc.org/releases/PCAWG/reference_data/pcawg-bwa-mem
       - genome.fa.gz
@@ -148,7 +148,7 @@ doc: |
 
     We assume the reference files are under *reference* subfolder.
 
-    3. Job JSON file for CWL
+    #### Job JSON file for CWL
 
     Finally, we need to prepare a JSON file with input, reference files specified. Please replace
     the *tumor_bam* and *normal_bam* parameters with your real BAM files.
@@ -189,12 +189,12 @@ doc: |
 
     ### Run the workflow
     #### Option 1: Run with CWL tool
-    1. Download CWL workflow definition file
+    - Download CWL workflow definition file
     ```
     wget -O pcawg-gatk-cocleaning.cwl "https://github.com/ICGC-TCGA-PanCancer/pcawg-gatk-cocleaning/blob/0.1.1/gatk-cocleaning-workflow.cwl"
     ```
 
-    2. Run `cwltool` to execute the workflow
+    - Run `cwltool` to execute the workflow
     ```
     nohup cwltool --debug --non-strict pcawg-gatk-cocleaning.cwl pcawg-gatk-cocleaning.job.json > pcawg-gatk-cocleaning.log 2>&1 &
     ```
