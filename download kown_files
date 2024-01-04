@@ -1,1 +1,2 @@
 lftp ftp.broadinstitute.org -u gsapubftp-anonymous
+回车后键入空格，便可进入resource bundle。进入其中名为bundle的目录，找到最新版的hg19目录。
