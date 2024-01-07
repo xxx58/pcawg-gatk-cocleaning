@@ -7,7 +7,7 @@ hints:
 
 requirements: 
   - class: DockerRequirement
-    dockerPull: "quay.io/pancancer/pcawg-gatk-cocleaning:0.1.1"
+    dockerPull: cuhkhaosun/workflow-pancancer:gatk-cocleaning-latest
 
 baseCommand: 
   - "java"
