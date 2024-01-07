@@ -1,17 +1,17 @@
 tumor_bam: 
   class: File
-  path: /mnt/gatk-cocleaning-resources/testexome.pair0.normal.bam
+  path: /home/xpy/job/pan-coclean/input/tumor_sample.bam
 normal_bam: 
   class: File
-  path: /mnt/gatk-cocleaning-resources/testexome.pair0.tumour.bam
+  path: /home/xpy/job/pan-coclean/input/normal_sample.bam
 reference:
   class: File
-  path: /mnt/gatk-cocleaning-resources/Homo_sapiens_assembly19.fasta
+  path: /home/xpy/job/pan-coclean/input/reference.fasta
 knownIndels: 
   - class: File
-    path: /mnt/gatk-cocleaning-resources/1000G_phase1.indels.hg19.sites.fixed.vcf
+    path: /home/xpy/job/pan-coclean/input/1000G_phase1.indels.hg19.sites.vcf.gz
   - class: File
-    path: /mnt/gatk-cocleaning-resources/Mills_and_1000G_gold_standard.indels.hg19.sites.fixed.vcf
+    path: /home/xpy/job/pan-coclean/input/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz
 knownSites:
   - class: File
-    path: /mnt/gatk-cocleaning-resources/dbsnp_132_b37.leftAligned.vcf
+    path: /home/xpy/job/pan-coclean/input/dbsnp_138_b37.vcf.gz
