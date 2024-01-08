@@ -2,10 +2,16 @@
     "tumor_bam": {
         "class": "File",
         "path": "/home/xpy/job/pan-coclean/input/tumor_sample.bam"
+        "SecondaryFiles": [
+            "/home/xpy/job/pan-coclean/input/tumor_sample.bam.bai"
+        ]
     },
     "normal_bam": {
         "class": "File",
         "path": "/home/xpy/job/pan-coclean/input/normal_sample.bam"
+        "SecondaryFiles": [
+            "/home/xpy/job/pan-coclean/input/tumor_sample.bam.bai"
+        ]
     },
     "reference": {
         "class": "File",
