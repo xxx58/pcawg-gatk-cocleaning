@@ -8,10 +8,12 @@ requirements:
 inputs:
   tumor_bam:
     type: File
-
+    secondaryFiles:
+    - .bai
   normal_bam:
     type: File
-
+    secondaryFiles:
+    - .bai
   knownIndels:
     type:
       - type: array
