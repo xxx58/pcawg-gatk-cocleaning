@@ -15,7 +15,7 @@
     },
     "reference": {
         "class": "File",
-        "path": "/home/xpy/data/reference/genome.fa"
+        "path": "/home/xpy/data/reference/genome.fa.gz"
     },
     "knownIndels": [
         {
